@@ -14,7 +14,7 @@
 			]]>
 	</insert>
 			
-	<select id="selectUser" parameterType="com.javaex.vo.UserVo" resultType="com.javaex.vo.UserVo">
+	<select id="select" parameterType="com.javaex.vo.UserVo" resultType="com.javaex.vo.UserVo">
 		<![CDATA[
 			select no,
 				   name
@@ -22,12 +22,37 @@
 			where id = #{id}
 			and password = #{password}
 		]]>
+	</select>
+
+	<select id="selectUser" parameterType="int" resultType="com.javaex.vo.UserVo">
+			<![CDATA[
+				SELECT
+    					id,
+    					password,
+    					name,
+    					gender
+				FROM
+   					 	users
+				where
+				    no = #{no}		
+			]]>
+	</select>
+
+	
+	
 		
 	
+	<update id="updateUser" parameterType="com.javaex.vo.UserVo">
+		<![CDATA[
+			update users
+			set password = #{password},
+					name = #{name},
+				  gender = #{gender}
+			where no = #{no}
+		]]>
 	
-	</select>		
-	
-	
+	</update>
+
 	
 
 </mapper>

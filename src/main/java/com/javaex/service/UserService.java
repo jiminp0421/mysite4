@@ -2,6 +2,7 @@ package com.javaex.service;
 
 
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,4 +31,20 @@ public class UserService { //지금은 비즈니스로직으로만 이해하면�
 		
 		return authUser;
 	}
+	
+	public UserVo modifyGet(int no) {
+		System.out.println("/user/modifyget");
+		UserVo vo = userDao.selectUser(no);
+		return vo;
+	}
+	
+	public int modify(UserVo userVo) {
+		System.out.println("userService.modify");
+		
+		int authUser = userDao.updateUser(userVo);
+		
+		return authUser;
+	}
+
 }
+

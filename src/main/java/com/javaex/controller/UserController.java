@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -33,7 +34,7 @@ public class UserController {
 		
 		userService.join(userVo);
 		
-		return "redirect:/main";
+		return "user/joinOk";
 	}
 	
 	@RequestMapping("/loginForm")
@@ -60,6 +61,45 @@ public class UserController {
 			return "redirect:/user/loginForm?result=fail";
 		}
 
+	}//login
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		
+		System.out.println("userController/logout");
+		
+		session.removeAttribute("authUser");
+		session.invalidate();
+
+		return "redirect:/main";
+	}
+	
+	@RequestMapping("/modifyForm")
+	public String modifyForm(HttpSession session, Model model) {
+
+		UserVo vo = (UserVo)session.getAttribute("authUser");
+		UserVo userVo = userService.modifyGet(vo.getNo());
+		System.out.println(userVo.toString());
+		model.addAttribute("userVo", userVo);
+		
+		System.out.println("/user/modifyForm");
+		return "user/modifyForm";
+	}
+	
+	@RequestMapping("/modify")
+	public String modify(@ModelAttribute UserVo userVo, HttpSession session) {
+		
+		System.out.println("userController/modify");
+		System.out.println(userVo.toString());
+		
+		int authUser = userService.modify(userVo);
+		System.out.println(authUser);
+		
+		UserVo vo = (UserVo)session.getAttribute("authUser");
+		vo.setName(userVo.getName());
+		
+		return "redirect:/main";
+		
 	}
 	
 	

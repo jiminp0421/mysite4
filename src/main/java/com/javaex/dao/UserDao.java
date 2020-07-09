@@ -1,5 +1,7 @@
 package com.javaex.dao;
 
+
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -22,12 +24,24 @@ public class UserDao {
 	
 	public UserVo selectUser(UserVo userVo) {
 		
-		System.out.println("userDao:selectUser");
+		System.out.println("userDao:select");
 
 		
-		return sqlSession.selectOne("user.selectUser", userVo);
+		return sqlSession.selectOne("user.select", userVo);
+	}
+	
+	public int updateUser(UserVo userVo) {
+		
+		System.out.println("userDao.update");
+		
+		return sqlSession.update("user.updateUser", userVo);
 		
 	}
+	
+	public UserVo selectUser(int no) {
+		return sqlSession.selectOne("user.selectUser", no);
+	}
+	
 
 
 }
